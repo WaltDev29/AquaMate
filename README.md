@@ -38,7 +38,7 @@
 
 ## 🗂️ 파일 구조
 📁 AquaMate  
-├── home.html &nbsp;&nbsp; # 초기 페이지  
+├── index.html &nbsp;&nbsp; # 초기 페이지  
 ├── logIn.html &nbsp;&nbsp; # 로그인 페이지  
 ├── signUp.html &nbsp;&nbsp; # 회원가입 페이지  
 ├── userHome.html &nbsp;&nbsp; # 유저 홈페이지  
@@ -53,7 +53,7 @@
 ## 🔍 사용 방법
 <br>
 
-**이 레파지토리를 클론한 뒤 home.html을 열어 사용해보세요!**
+**이 레파지토리를 클론한 뒤 index.html을 열어 사용해보세요!**
 
 <br>
 
