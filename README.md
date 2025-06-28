@@ -27,7 +27,7 @@
 <br>
 
 ## 📷 상세 사진
-|Descirption|Image|
+|Description|Image|
 |:--:|:--:|
 |홈페이지|<img src="https://github.com/user-attachments/assets/e8810117-8b20-4a0e-baeb-f7afd4a8054a" width="500">|
 |물고기 사전|<img src="https://github.com/user-attachments/assets/57a386ed-1cc0-4a26-bf9e-cf6ff235a3fd" width="500">|
