@@ -38,6 +38,10 @@
 
 ## 🗂️ 파일 구조
 📁 AquaMate  
+├── 📁 css  
+├── 📁 data  
+├── 📁 images  
+├── 📁 js  
 ├── index.html &nbsp;&nbsp; # 메인 페이지  
 ├── logIn.html &nbsp;&nbsp;   
 ├── signUp.html &nbsp;&nbsp;  
@@ -45,9 +49,7 @@
 ├── dictionary.html &nbsp;&nbsp;  
 ├── fish_info.html &nbsp;&nbsp;    
 ├── match.html   
-├── about.html   
-├── 📁 css  
-└── 📁 images
+└── about.html   
 
 <br>
 
@@ -60,7 +62,6 @@
 
 ## 🌱 향후 개선 아이디어
 
-- JavaScript 추가
 - API와 DB를 활용한 물고기 데이터 관리
 - 회원 관리 기능 추가
 
