@@ -1,64 +1,85 @@
-<!DOCTYPE html>
-<html lang="kr">
+$(document).ready(function () {
+	let isValid = true;
+	// submit 유효성 검사
+	$("#div_signUp").submit(function (e) {
+		isValid = true;
+		// border, placeholder 초기화
+		$(".tb input").css("border", "2px solid rgb(116, 114, 114)")
+		$(".tb input").removeAttr("placeholder");
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Aqua Mate : Sign Up</title>
-	<link rel="stylesheet" href="css/signUp.css">
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	<script src="js/signUp.js"></script>
-</head>
+		// tb 공백 확인
+		$(".tb input").each(function () {
+			if ($(this).val().trim() === "") {
+				isValid = false;
+				$(this).css("border", "2px solid red")
+				$(this).attr("placeholder", "정보를 입력해주세요");
+			}
+		})
 
-<body>
-	<header>
-		<a href="index.html">
-			<img src="images/logo.png" width="500px">
-		</a>
-	</header>
-	<main>
-		<form action="userHome.html" id="div_signUp">
-			<h2>Sign Up</h3>
-				<div id="div_name" class="tb">
-					<label for="tb_name" class="label">Name</label>
-					<input type="text" id="tb_name" minlength="3" maxlength="30">
-				</div>
-				<div id="div_email" class="tb">
-					<label for="tb_email" class="label">email</label>
-					<input type="email" id="tb_email" maxlength="80">
-				</div>
-				<div id="div_phoneNum" class="tb">
-					<label for="tb_phoneNum" class="label">Phone Number</label>
-					<input type="text" id="tb_phoneNum" maxlength="13">
-				</div>
-				<div id="div_id" class="tb">
-					<label for="tb_id" class="label">ID</label>
-					<input type="text" id="tb_id"maxlength="15">
-				</div>
-				<div id="div_pw" class="tb">
-					<label for="tb_pw" class="label">PW</label>
-					<input type="password" id="tb_pw" maxlength="15" placeholder="특수문자 포함 8~15자리">
-				</div>
-				<div id="div_pwCheck" class="tb">
-					<label for="tb_pwCheck" class="label">PW Check</label>
-					<input type="password" id="tb_pwCheck" maxlength="15">
-				</div>
-				<input type="submit" id="btn_signUp" value="Sign Up">
-		</form>
-	</main>
-	<footer>
-		<div id="contact">
-			<span id="contact_label">Contact</span>
-			<span class="label"><img src="images/github.png" id="img_github"><a
-					href="https://github.com/WaltDev29">WaltDev29</a></span>
-			<span class="label"><img src="images/email.png" id="img_email">waltdev29@gmail.com</span>
-		</div>
-		<div id="source">
-			<span id="source_label">source</span>
-			<span class="label"><a
-					href="https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8">Wikipedia</a></span>
-		</div>
-	</footer>
-</body>
+		// 비밀번호 확인
+		let pwInput = $("#tb_pw").val().trim();
+		let pwRegex = /[^a-zA-Z0-9가-힣\s]/;
+		if (!pwRegex.test(pwInput) || (pwInput.length > 15 || pwInput.length < 8)) {
+			isValid = false;
+			$("#tb_pw").css("border", "2px solid red");
+			$("#tb_pw").val("");
+			$("#tb_pw").attr("placeholder", "특수문자 포함 8~15자리 입력");
+		}
 
-</html>
+		// 비밀번호 일치 확인
+		if ($("#tb_pw").val() !== $("#tb_pwCheck").val()) {
+			isValid = false;
+			$("#tb_pwCheck").css("border", "2px solid red");
+			$("#tb_pwCheck").val("");
+			$("#tb_pwCheck").attr("placeholder", "비밀번호가 일치하지 않습니다.");
+		}
+
+		// 전화번호 확인
+		let phoneRegex = /^(010-\d{4}-\d{4})$/;
+		if (!phoneRegex.test($("#tb_phoneNum").val())) {
+			isValid = false;
+			$("#tb_phoneNum").val("");
+			$("#tb_phoneNum").attr("placeholder", "맞지 않는 형식입니다.");
+		}
+
+
+		// 이벤트 막기
+		if (!isValid) e.preventDefault();
+	})
+
+	// 텍스트를 입력하면 border 초기화
+	$(".tb input").on("input", function () {
+		if (!isValid) {
+			if ($(this).val().trim() !== "") $(this).css("border", "2px solid rgb(116, 114, 114)");
+			else $(this).css("border", "2px solid red");
+		}
+	})
+
+	// 전화번호 문자 입력 제한 & 하이픈 자동 입력
+	$("#tb_phoneNum").keydown(function (e) {
+		let value = $(this).val();
+
+		// 숫자 이외의 문자 입력 막기
+		if ((e.key > '9' || e.key < '0') && e.key !== "Backspace") e.preventDefault();
+
+		// 숫자, 하이픈 이외의 문자 지우기
+		value = value.replace(/[^0-9\-]/g, "");
+
+		// 하이픈 자동 입력
+		if (e.key !== "Backspace") {
+			if (value.length === 3 || value.length === 8) value += '-';
+		}
+		// 하이픈 자동 제거
+		else if (value.length === 5 || value.length === 10) value = value.slice(0, -1);
+
+		$(this).val(value);
+	});
+
+	// 한글 입력 제한
+	$(".tb input:not(#tb_phoneNum, #tb_name)").on("input", function () {
+		let value = $(this).val();
+		let korean = /[가-힣ㄱ-ㅎㅏ-ㅣ]/g;
+		value = value.replace(korean, "");
+		$(this).val(value);
+	});
+})
